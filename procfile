@@ -1,1 +1,1 @@
-web: waitress-serve --listen=*:8000 FDOT.wsgi:FDS
+web: gunicorn app:app
