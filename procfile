@@ -1,2 +1,1 @@
-release: python manage.py migrate
-web: gunicorn FDOT.wsgi
+web: waitress-serve --listen=*:8000 FDOT.wsgi:FDS
