@@ -1,1 +1,2 @@
-web: gunicorn  FDOT:homeApp
+release: python manage.py migrate
+web: gunicorn FDOT.wsgi
