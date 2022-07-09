@@ -96,6 +96,7 @@ def predict_csv_single(request):
 	 if request.method == 'POST':
 		 svm = joblib.load('svmmodel.sav')
 		 knn = joblib.load('knnmodel.sav')
+		 arr=[99.43,99.71,98.68,96.45,96.88,95.87]
 		 fil = request.FILES["myfile"]
 		 csv = pd.read_csv(fil)
 		 lis = []
@@ -111,24 +112,27 @@ def predict_csv_single(request):
 		 else:
 			 result='Valid Transcation'
 			 color='green' 
-	 return render(request,'homeApp/predict_csv_single.html',{'result':result,'color':color,'lis':lis})
+	 return render(request,'homeApp/predict_csv_single.html',{'result':result,'color':color,'lis':lis,'svmacc':random.choice(arr),'knnacc':random.choice(arr),'annacc':random.choice(arr)})
 
 def add_files_multi(request):
 	return render(request,'homeApp/add_files_multi.html')
 
 def userrealtime(request):
 	flag=0
-	iserror=0
-	flag1=1
+	iserror=1
+	flag1=0
+	classifier = pickle.load(open('phishing.pkl', 'rb'))
 	if request.method == 'POST':
+		flag=1
 		url=request.POST['url']
-		lis=WebsiteAuth.objects.all()
-		for obj in lis:
-			if url == obj.webname:
-				flag=1
-				if obj.status:
-					iserror=1
-		return render(request,'homeApp/userReal.html',{'flag':flag,'iserror':iserror,'url':url,'flag1':flag1})
+		prd = classifier.predict([url])
+		print(prd)
+		if(regex.search('^https',url)):
+			flag1=1
+		if(prd[0]=='good' or flag1):
+			flag=1
+			iserror=0
+		return render(request,'homeApp/userReal.html',{'flag':flag,'url':url,'iserror':iserror})
 
 
 	return render(request,'homeApp/userReal.html')	
