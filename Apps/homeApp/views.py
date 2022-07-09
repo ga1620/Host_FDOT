@@ -10,6 +10,9 @@ from .models import DataFileUpload
 from .models import WebsiteAuth
 import joblib
 import pandas as pd
+import regex
+import random
+import pickle
 def base(request):
 	return render(request,'homeApp/landing_page.html')
 	
@@ -133,8 +136,7 @@ def userrealtime(request):
 			flag=1
 			iserror=0
 		return render(request,'homeApp/userReal.html',{'flag':flag,'url':url,'iserror':iserror})
-
-
+		
 	return render(request,'homeApp/userReal.html')	
 
 def predict_csv_multi(request):
