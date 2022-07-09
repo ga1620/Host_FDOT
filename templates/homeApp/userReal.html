@@ -18,7 +18,7 @@ USERREALTIME | Fraud Detection System
     <div id="fraud-buttons-container"  style="display:flex;justify-content:space-around;">
         <form method="POST">
             {% csrf_token %}
-        <input type="url" pattern="https://.*/" style=" margin-top:50px;font-size:25px;width:500px;text-align:center" required name="url" placeholder="URL">
+        <input type="text" style=" margin-top:50px;font-size:25px;width:500px;text-align:center" required name="url" placeholder="URL">
         <div style="display:flex;justify-content:space-around; margin-top:30px">
         <input type="submit" value="Check" class="btn btn-success" style="width:100px;">
     </div>
